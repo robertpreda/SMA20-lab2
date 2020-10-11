@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +17,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,12 +65,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void click(View view)
-    {
+    public void click(View view) throws UnsupportedEncodingException {
+        String name_text = name.getText().toString();
         switch(view.getId()){
             case R.id.bGreet:
-                String name_text = name.getText().toString();
+
                 alert(name_text);
+                break;
+            case R.id.buttonSearch:
+                String escapedQuery = URLEncoder.encode(name_text, "UTF-8");
+                Uri uri = Uri.parse("http://www.google.com/#q=" + escapedQuery);
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW, uri);
+//                sendIntent.putExtra(Intent.EXTRA_TEXT, uri);
+//                sendIntent.setAction(Intent.ACTION_VIEW);
+                startActivity(sendIntent);
+                break;
+            case R.id.buttonShare:
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType( "message/rfc822");
+                startActivity(Intent.createChooser(i, "Choose an app..."));
                 break;
             default: break;
         }
