@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case R.id.buttonSearch:
                 String escapedQuery = URLEncoder.encode(name_text, "UTF-8");
-                Uri uri = Uri.parse("http://www.google.com/#q=" + escapedQuery);
+                Uri uri = Uri.parse("http://www.google.com/search?q=" + escapedQuery);
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW, uri);
 //                sendIntent.putExtra(Intent.EXTRA_TEXT, uri);
 //                sendIntent.setAction(Intent.ACTION_VIEW);
